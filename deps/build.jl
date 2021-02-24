@@ -5,9 +5,9 @@ const LKH_SRC_URL = "http://webhotel4.ruc.dk/~keld/research/LKH/$(LKH_VERSION).t
 const LKH_WIN_EXE_URL = "http://webhotel4.ruc.dk/~keld/research/LKH/LKH-2.exe"
 
 function download_win_exe()
-    LKH_EXECUTABLE = joinpath(@__DIR__, "LKH.exe")
-    download(LKH_WIN_EXE, LKH_EXECUTABLE)
-    return LKH_EXECUTABLE
+    lkh_exe = joinpath(@__DIR__, "LKH.exe")
+    download(LKH_WIN_EXE, lkh_exe)
+    return lkh_exe
 end
 
 function build_LKH()
@@ -19,8 +19,8 @@ function build_LKH()
     run(`make`)
     mv("LKH", joinpath(@__DIR__, "LKH"), force=true)
 
-    LKH_EXECUTABLE = joinpath(@__DIR__, "LKH")
-    return LKH_EXECUTABLE
+    lkh_exe = joinpath(@__DIR__, "LKH")
+    return lkh_exe
 end
 
 function download_LKH()
