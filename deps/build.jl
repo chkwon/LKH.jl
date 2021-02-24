@@ -6,7 +6,7 @@ const LKH_WIN_EXE_URL = "http://webhotel4.ruc.dk/~keld/research/LKH/LKH-2.exe"
 
 function download_win_exe()
     lkh_exe = joinpath(@__DIR__, "LKH.exe")
-    download(LKH_WIN_EXE, lkh_exe)
+    download(LKH_WIN_EXE_URL, lkh_exe)
     return lkh_exe
 end
 

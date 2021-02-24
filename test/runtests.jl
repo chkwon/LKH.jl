@@ -12,6 +12,12 @@ using Test
    opt_tour, opt_len = solve_tsp(M)
    @test opt_len == 29    
 
+   M = rand(1:9, 300, 300)
+   M = M + M'
+   for i in 1:300
+    M[i, i] = 0
+   end
+   solve_tsp(M)
 
    M = rand(1:9, 100, 100)
    @test_throws ErrorException solve_tsp(M)

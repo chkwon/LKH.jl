@@ -62,7 +62,10 @@ function solve_tsp(dist_mtx::Matrix{Int})
 
     name = write_par(dist_mtx)
 
-    run(`$(LKH.LKH_EXECUTABLE) $(name).par`)
+    status = run(`$(LKH.LKH_EXECUTABLE) $(name).par`, wait=false)
+    while !success(status)
+        # 
+    end
 
     opt_tour = read_output(name)
     opt_len = tour_length(opt_tour, dist_mtx)
