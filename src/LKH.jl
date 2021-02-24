@@ -26,7 +26,7 @@ function filepath(name, ext)
     return joinpath(pwd(), "$(name).$(ext)")
 end
 
-function write_par(dist_mtx; runs=4)
+function write_par(dist_mtx; kwargs...)
     name, tsp_filepath = write_tsp(dist_mtx)
 
     par_filepath = filepath(name, "par")
@@ -34,8 +34,12 @@ function write_par(dist_mtx; runs=4)
 
     open(par_filepath, "w") do io
         write(io, "PROBLEM_FILE = $(name).tsp\n")
-        write(io, "RUNS = $runs\n")
         write(io, "TOUR_FILE = $(name).out\n")
+        if length(kwargs) > 0
+            for (key, val) in kwargs
+                write(io, key, " = ", string(val), "\n")
+            end
+        end            
     end
 
     return name
@@ -55,17 +59,23 @@ function cleanup(name)
     rm.(filepath.(name, exts))
 end
 
-function solve_tsp(dist_mtx::Matrix{Int})
+function solve_tsp(dist_mtx::Matrix{Int}; log="off", kwargs...)
     if dist_mtx != dist_mtx'
         error("The problem must be symmetric.")
     end
 
-    name = write_par(dist_mtx)
+    name = write_par(dist_mtx; kwargs...)
 
-    status = run(`$(LKH.LKH_EXECUTABLE) $(name).par`, wait=false)
-    while !success(status)
-        # 
+    if log == "off" || Sys.iswindows()
+        status = run(`$(LKH.LKH_EXECUTABLE) $(name).par`, wait=false)
+        while !success(status)
+            # Wait until it finishes
+            # In Windows, it stops with "Press any key to continue . . . "
+        end
+    else        
+        run(`$(LKH.LKH_EXECUTABLE) $(name).par`)
     end
+
 
     opt_tour = read_output(name)
     opt_len = tour_length(opt_tour, dist_mtx)

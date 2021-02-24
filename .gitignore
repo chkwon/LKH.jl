@@ -1,3 +1,4 @@
 /Manifest.toml
 deps/LKH*
+deps/deps.jl
 build.log
