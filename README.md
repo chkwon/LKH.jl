@@ -20,6 +20,7 @@ M = [
 ]
 opt_tour, opt_len = solve_tsp(M)
 ```
+The distance matrix `M` can be either symmetric or asymmetric, but must be integer-valued.
 
 
 ## Using coordinates
