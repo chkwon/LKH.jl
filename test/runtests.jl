@@ -29,5 +29,10 @@ using Test
         solve_tsp(M)
     end
 
-    
+    @testset "Coordinates" begin
+        n_nodes = 10
+        x = rand(n_nodes) .* 10000
+        y = rand(n_nodes) .* 10000
+        opt_tour, opt_len = solve_tsp(x, y; dist="EUC_2D")
+    end    
 end

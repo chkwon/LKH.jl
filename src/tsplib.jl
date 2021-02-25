@@ -1,3 +1,32 @@
+function write_tsp(x::Vector{Float64}, y::Vector{Float64}; dist="EUC_2D")
+    n_nodes = length(x)
+    @assert length(x) == length(y)
+
+    name = randstring(10)
+    filepath = joinpath(pwd(), name * ".tsp")
+
+    open(filepath, "w") do io
+        write(io, "NAME: $(name)\n")
+        write(io, "TYPE: TSP\n")
+        write(io, "COMMENT: $(name)\n")
+        write(io, "DIMENSION: $(n_nodes)\n")
+        write(io, "EDGE_WEIGHT_TYPE: $(dist)\n")
+        write(io, "EDGE_WEIGHT_FORMAT: FUNCTION \n")
+        write(io, "NODE_COORD_TYPE: TWOD_COORDS \n")
+        write(io, "NODE_COORD_SECTION\n")
+        for i in 1:n_nodes
+            write(io, "$i $(x[i]) $(y[i])\n")
+        end
+        write(io, "EOF\n")
+    end
+
+    return name, filepath
+end
+
+
+
+
+
 function write_tsp(dist_mtx::Matrix{Int})
     n_nodes = size(dist_mtx, 1)
 

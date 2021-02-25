@@ -26,13 +26,8 @@ function filepath(name, ext)
     return joinpath(pwd(), "$(name).$(ext)")
 end
 
-function write_par(dist_mtx; kwargs...)
-    if issymmetric(dist_mtx)
-        name, tsp_filepath = write_tsp(dist_mtx)
-    else 
-        name, tsp_filepath = write_atsp(dist_mtx)
-    end
 
+function write_par(name; kwargs...)
     par_filepath = filepath(name, "par")
     out_filepath = filepath(name, "out")
 
@@ -53,9 +48,11 @@ function read_output(name)
     output = readlines(filepath(name, "out"))
     idx1 = findfirst(x -> x=="TOUR_SECTION", output) + 1
     idx2 = findfirst(x -> x=="-1", output) - 1
-
     tour = parse.(Int, output[idx1:idx2])
-    return tour
+
+    len = parse(Int, split(output[2])[end])
+
+    return tour, len
 end
 
 function cleanup(name)
@@ -63,9 +60,7 @@ function cleanup(name)
     rm.(filepath.(name, exts))
 end
 
-function solve_tsp(dist_mtx::Matrix{Int}; log="off", kwargs...)
-    name = write_par(dist_mtx; kwargs...)
-
+function _solve_tsp(name; log="off", kwargs...)
     if log == "off" || Sys.iswindows()
         status = run(`$(LKH.LKH_EXECUTABLE) $(name).par`, wait=false)
         while !success(status)
@@ -76,16 +71,29 @@ function solve_tsp(dist_mtx::Matrix{Int}; log="off", kwargs...)
         run(`$(LKH.LKH_EXECUTABLE) $(name).par`)
     end
 
-
-    opt_tour = read_output(name)
-    opt_len = tour_length(opt_tour, dist_mtx)
+    opt_tour, opt_len = read_output(name)
     
     cleanup(name)
 
     return opt_tour, opt_len
 end
 
+function solve_tsp(dist_mtx::Matrix{Int}; log="off", kwargs...)
+    if issymmetric(dist_mtx)
+        name, tsp_filepath = write_tsp(dist_mtx)
+    else 
+        name, tsp_filepath = write_atsp(dist_mtx)
+    end
 
+    write_par(name; kwargs...)
+    return _solve_tsp(name; log=log, kwargs...)
+end
+
+function solve_tsp(x::Vector{Float64}, y::Vector{Float64}; dist="EUC_2D", log="off", kwargs...)
+    name, tsp_filepath = write_tsp(x, y; dist=dist)
+    write_par(name; kwargs...)
+    return _solve_tsp(name; log=log, kwargs...)
+end
 
 export solve_tsp
 
