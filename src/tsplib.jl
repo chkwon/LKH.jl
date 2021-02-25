@@ -35,3 +35,34 @@ function write_tsp(dist_mtx::Matrix{Int})
 
     return name, filepath
 end
+
+
+
+
+function write_atsp(dist_mtx::Matrix{Int})
+    n_nodes = size(dist_mtx, 1)
+
+    name = randstring(10)
+    filepath = joinpath(pwd(), name * ".tsp")
+
+    rows = String[]
+    for i in 1:n_nodes
+        push!(rows, join(dist_mtx[i, :], " "))
+    end
+
+    open(filepath, "w") do io
+        write(io, "NAME: $(name)\n")
+        write(io, "TYPE: ATSP\n")
+        write(io, "COMMENT: $(name)\n")
+        write(io, "DIMENSION: $(n_nodes)\n")
+        write(io, "EDGE_WEIGHT_TYPE: EXPLICIT\n")
+        write(io, "EDGE_WEIGHT_FORMAT: FULL_MATRIX \n")
+        write(io, "EDGE_WEIGHT_SECTION\n")
+        for r in rows
+            write(io, "$r\n")
+        end
+        write(io, "EOF\n")
+    end
+
+    return name, filepath
+end

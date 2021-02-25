@@ -1,6 +1,6 @@
 module LKH
 
-using Random 
+using Random, LinearAlgebra
 
 # Write your package code here.
 include("../deps/deps.jl") # const LKH_EXECUTABLE
@@ -27,7 +27,11 @@ function filepath(name, ext)
 end
 
 function write_par(dist_mtx; kwargs...)
-    name, tsp_filepath = write_tsp(dist_mtx)
+    if issymmetric(dist_mtx)
+        name, tsp_filepath = write_tsp(dist_mtx)
+    else 
+        name, tsp_filepath = write_atsp(dist_mtx)
+    end
 
     par_filepath = filepath(name, "par")
     out_filepath = filepath(name, "out")
@@ -60,10 +64,6 @@ function cleanup(name)
 end
 
 function solve_tsp(dist_mtx::Matrix{Int}; log="off", kwargs...)
-    if dist_mtx != dist_mtx'
-        error("The problem must be symmetric.")
-    end
-
     name = write_par(dist_mtx; kwargs...)
 
     if log == "off" || Sys.iswindows()
