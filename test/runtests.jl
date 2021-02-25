@@ -35,4 +35,9 @@ using Test
         y = rand(n_nodes) .* 10000
         opt_tour, opt_len = solve_tsp(x, y; dist="EUC_2D")
     end    
+
+    @testset "TSP Input File" begin
+        opt_tour, opt_len = solve_tsp("gr17.tsp")
+        @test opt_len == 2085
+    end
 end

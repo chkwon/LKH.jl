@@ -95,6 +95,19 @@ function solve_tsp(x::Vector{Float64}, y::Vector{Float64}; dist="EUC_2D", log="o
     return _solve_tsp(name; log=log, kwargs...)
 end
 
+function solve_tsp(tsp_file::String; log="off", kwargs...)
+    if !isfile(tsp_file)
+        error("$(tsp_file) is not a file.")
+    end
+
+    name = randstring(10)
+    filepath = name * ".tsp"
+    cp(tsp_file, filepath)
+
+    write_par(name; kwargs...)
+    return _solve_tsp(name; log=log, kwargs...)
+end
+
 export solve_tsp
 
 end
