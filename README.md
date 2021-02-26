@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/chkwon/LKH.jl/workflows/CI/badge.svg?branch=master)](https://github.com/chkwon/LKH.jl/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/chkwon/LKH.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/chkwon/LKH.jl)
 
-This package provides a Julia wrapper for the [LKH solver](http://webhotel4.ruc.dk/~keld/research/LKH/) for solving Traveling Salesman Problems (TSP).  LKH is Keld Helsgaun's efficient implemtation of the Lin-Kernighan heuristic.
+This package provides a Julia wrapper for the [LKH solver](http://webhotel4.ruc.dk/~keld/research/LKH/) for solving Traveling Salesman Problems (TSP).  LKH is [Keld Helsgaun](http://webhotel4.ruc.dk/~keld/)'s efficient implemtation of the [Lin-Kernighan heuristic](https://doi.org/10.1287/opre.21.2.498).
 
 
 # Usage
