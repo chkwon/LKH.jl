@@ -95,3 +95,60 @@ function write_atsp(dist_mtx::Matrix{Int})
 
     return name, filepath
 end
+
+
+
+
+
+function tour_length(tour, M)
+    n_nodes = length(tour)
+    len = 0
+    for i in 1:n_nodes
+        j = i + 1
+        if i == n_nodes
+            j = 1
+        end
+
+        len += M[tour[i], tour[j]]
+    end
+
+    return len
+end
+
+function filepath(name, ext)
+    return joinpath(pwd(), "$(name).$(ext)")
+end
+
+
+function write_par(name; kwargs...)
+    par_filepath = filepath(name, "par")
+    out_filepath = filepath(name, "out")
+
+    open(par_filepath, "w") do io
+        write(io, "PROBLEM_FILE = $(name).tsp\n")
+        write(io, "TOUR_FILE = $(name).out\n")
+        if length(kwargs) > 0
+            for (key, val) in kwargs
+                write(io, key, " = ", string(val), "\n")
+            end
+        end            
+    end
+
+    return name
+end
+
+function read_output(name)
+    output = readlines(filepath(name, "out"))
+    idx1 = findfirst(x -> x=="TOUR_SECTION", output) + 1
+    idx2 = findfirst(x -> x=="-1", output) - 1
+    tour = parse.(Int, output[idx1:idx2])
+
+    len = parse(Int, split(output[2])[end])
+
+    return tour, len
+end
+
+function cleanup(name)
+    exts = ["par", "tsp", "out"]
+    rm.(filepath.(name, exts))
+end
