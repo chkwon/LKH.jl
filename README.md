@@ -5,6 +5,12 @@
 
 This package provides a Julia wrapper for the [LKH](http://webhotel4.ruc.dk/~keld/research/LKH/) library for solving Traveling Salesman Problems (TSP). 
 
+# Installation
+
+```julia
+] add LKH
+```
+
 # Usage
 
 ## Using a distance matrix
