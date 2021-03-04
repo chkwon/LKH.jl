@@ -5,6 +5,8 @@
 
 This package provides a Julia wrapper for the [LKH](http://webhotel4.ruc.dk/~keld/research/LKH/) library for solving Traveling Salesman Problems (TSP). 
 
+While this Julia package is under MIT License, the underlying LKH library comes in a differenct license. Check with the [LKH library homepage](http://webhotel4.ruc.dk/~keld/research/LKH).
+
 # Installation
 
 ```julia
