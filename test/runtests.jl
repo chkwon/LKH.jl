@@ -1,6 +1,6 @@
 using LKH
 using Test
-
+using CVRPLIB
 
 @testset "LKH.jl" begin
     @testset "Symmetric TSP" begin
@@ -43,4 +43,18 @@ using Test
         opt_tour, opt_len = solve_tsp("gr17.tsp")
         @test opt_len == 2085
     end
+
+    @testset "CVRP Input File" begin
+        opt_tour, opt_len = solve_tsp("P-n16-k8.vrp")
+        @test opt_len == 450
+        @show opt_tour
+
+        opt_tour, opt_len = solve_tsp("P-n19-k2.vrp")
+        @test opt_len == 212
+        @show opt_tour        
+
+        opt_tour, opt_len = solve_tsp("P-n101-k4.vrp", TIME_LIMIT=1)
+        @test opt_len >= 681
+        @show opt_tour             
+    end    
 end
