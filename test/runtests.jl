@@ -1,6 +1,5 @@
 using LKH
 using Test
-using CVRPLIB
 
 @testset "LKH.jl" begin
     @testset "Symmetric TSP" begin
