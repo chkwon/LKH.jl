@@ -1,7 +1,7 @@
 name = "LKH"
 uuid = "294deba0-74fa-42c9-af84-c3834b01fefc"
 authors = ["Changhyun Kwon <chkwon@gmail.com> and contributors"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
