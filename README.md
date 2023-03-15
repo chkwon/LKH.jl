@@ -78,5 +78,4 @@ cvrp, vrp_file_path, solution_file_path = readCVRP("E-n101-k14")
 - [LKH.jl](https://github.com/chkwon/LKH.jl): Julia wrapper of the [LKH heuristic solver](http://webhotel4.ruc.dk/~keld/research/LKH/).
 - [TSPLIB.jl](https://github.com/matago/TSPLIB.jl): Reads [TSPLIB-format](http://webhotel4.ruc.dk/~keld/research/LKH/LKH-2.0/DOC/TSPLIB_DOC.pdf) files (`*.tsp`)
 - [CVRPLIB.jl](https://github.com/chkwon/CVRPLIB.jl): Reads TSPLIB-format files from [CVRPLIB](http://vrp.atd-lab.inf.puc-rio.br/index.php/en/)
-- [PyTSP.jl](https://github.com/chkwon/PyTSP.jl): Julia wrapper of Python TSP libraries: [pyconcorde](https://github.com/jvkersch/pyconcorde) and [elkai](https://github.com/filipArena/elkai), which are Python wrappers of the Concorde and LKH solvers, respectively.
 - [TravelingSalesmanExact.jl](https://github.com/ericphanson/TravelingSalesmanExact.jl): Julia implementation of [Dantzig, Fulkerson, and Johnson's Cutting-Plane Method](https://doi.org/10.1287/opre.2.4.393).
